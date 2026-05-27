@@ -7,13 +7,24 @@ public class Driver implements DriverObserver {
 
     @Override
     public void update(OrderService order) {
-        System.out.println("[OBSERVER] Driver " + driverId + " menerima notifikasi pesanan masuk.");
+        // Jika order masih mencari driver, tampilkan notifikasi masuk
+        if (order.getState().getStatusName().equals("SearchingDriver")) {
+            System.out.println("[OBSERVER] Driver " + driverId + " menerima notifikasi pesanan masuk.");
+        } else {
+            // Jika statusnya sudah berubah, berarti sudah diambil driver lain!
+            System.out.println("[OBSERVER] Driver " + driverId + ": Pesanan sudah diambil driver lain. Menghapus dari radar.");
+        }
     }
 
-    // Simulasi ketika driver menekan tombol "Terima"
     public void acceptOrder(OrderService order) {
-        System.out.println("\n[INFO] Driver " + driverId + " berhasil mengambil pesanan!");
-        // Transisi status ke DriverOnTheWay
-        order.setState(new DriverOnTheWay()); 
+        if (order.getState().getStatusName().equals("SearchingDriver")) {
+            System.out.println("\n[INFO] Driver " + driverId + " berhasil mengambil pesanan!");
+            order.setState(new DriverOnTheWay()); 
+            
+            // Broadcast lagi ke observer lain bahwa status sudah berubah bukan SearchingDriver lagi
+            order.notifyObservers();
+        } else {
+            System.out.println("[INFO] Driver " + driverId + " gagal mengambil. Pesanan sudah keduluan driver lain.");
+        }
     }
 }
