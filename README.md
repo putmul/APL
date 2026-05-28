@@ -51,8 +51,14 @@ Berikut adalah gambaran log yang dihasilkan ketika simulasi dijalankan melalui `
 
 ```text
 === 1. SIMULASI STRATEGY PATTERN ===
+[INFO] Menggunakan Strategy: TarifNormal
+Harga Normal: Rp17500
+
 [INFO] Menggunakan Strategy: TarifHujanBadai
-Harga Final: Rp14375.0
+Harga Hujan Badai: Rp43750
+
+[INFO] Menggunakan Strategy: TarifMacetTotal
+Harga Macet Total: Rp31500
 
 === 2. SIMULASI OBSERVER & STATE PATTERN ===
 [STATE] Status: SearchingDriver (Sistem sedang melakukan broadcast ke driver...)
@@ -67,7 +73,6 @@ Harga Final: Rp14375.0
 
 === 3. SIKLUS PERJALANAN & PROSES CEGAH BUG CANCEL ===
 [STATE] Status: DriverOnTheWay (Driver telah sampai! Memulai perjalanan...)
-
 [ERROR] Gagal Cancel! Perjalanan sudah dimulai. Anda tidak bisa membatalkan pesanan saat berada di jalan!
 
 [STATE] Status: TripStarted (Penumpang sudah dijemput, perjalanan dimulai)
