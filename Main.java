@@ -10,11 +10,19 @@ public class Main {
         float dummyWaktu = 15.0f;   
 
         OrderService order = setupOrderService();
-        
-        System.out.println("=== 1. SIMULASI STRATEGY PATTERN ===");
-        order.setTarifStrategy(new TarifHujanBadai());
-        System.out.println("Harga Final: Rp" + order.kalkulasiHarga(dummyJarak, dummyWaktu) + "\n");
 
+        System.out.println("=== 1. SIMULASI STRATEGY PATTERN ===");
+        // --- Strategy 1: TarifNormal (default) ---
+        System.out.printf("Harga Normal: Rp%.0f%n%n", order.kalkulasiHarga(dummyJarak, dummyWaktu));
+
+        // --- Swap ke Strategy 2: TarifHujanBadai ---
+        order.setTarifStrategy(new TarifHujanBadai());
+        System.out.printf("Harga Hujan Badai: Rp%.0f%n%n", order.kalkulasiHarga(dummyJarak, dummyWaktu));
+
+        // --- Swap ke Strategy 3: TarifMacetTotal ---
+        order.setTarifStrategy(new TarifMacetTotal());
+        System.out.printf("Harga Macet Total: Rp%.0f%n%n", order.kalkulasiHarga(dummyJarak, dummyWaktu));
+        
         System.out.println("=== 2. SIMULASI OBSERVER & STATE PATTERN ===");
         // Membuat sekumpulan objek Driver (Observers)
         Driver driverA = new Driver("Anto");
