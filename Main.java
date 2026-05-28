@@ -1,15 +1,11 @@
 public class Main {
-    private static OrderService setupOrderService() {
-        float dummyJarak = 2000.0f;
-        float dummyWaktu = 500.0f;
-        return new OrderService(dummyJarak, dummyWaktu);
-    }
-
     public static void main(String[] args) {
-        float dummyJarak = 5.0f;    
-        float dummyWaktu = 15.0f;   
+        float baseRatePerKm    = 2000.0f;  // Rp 2.000 / km
+        float baseRatePerMenit = 500.0f;   // Rp 500 / menit
+        float dummyJarak = 5.0f;   // 5 km
+        float dummyWaktu = 15.0f;  // 15 menit
 
-        OrderService order = setupOrderService();
+        OrderService order = new OrderService(baseRatePerKm, baseRatePerMenit);
 
         System.out.println("=== 1. SIMULASI STRATEGY PATTERN ===");
         // --- Strategy 1: TarifNormal (default) ---
@@ -22,7 +18,7 @@ public class Main {
         // --- Swap ke Strategy 3: TarifMacetTotal ---
         order.setTarifStrategy(new TarifMacetTotal());
         System.out.printf("Harga Macet Total: Rp%.0f%n%n", order.kalkulasiHarga(dummyJarak, dummyWaktu));
-        
+
         System.out.println("=== 2. SIMULASI OBSERVER & STATE PATTERN ===");
         // Membuat sekumpulan objek Driver (Observers)
         Driver driverA = new Driver("Anto");
