@@ -25,21 +25,33 @@ public class Main {
         order.registerObserver(driverB);
         order.registerObserver(driverC);
 
-        // Penumpang menekan tombol pesan -> Trigger State SearchingDriver
-        order.jalan(); 
+        try {
+            // Penumpang menekan tombol pesan -> Trigger State SearchingDriver
+            order.jalan(); 
+            
+            Thread.sleep(1500); // Simulasi sistem butuh waktu 1.5 detik mencari driver
 
-        // Driver Budi mendahului mengambil pesanan
-        driverB.acceptOrder(order);
+            // Driver Budi mendahului mengambil pesanan
+            driverB.acceptOrder(order);
 
-        System.out.println("\n=== 3. SIKLUS PERJALANAN & PROSES CEGAH BUG CANCEL ===");
-        // Driver sampai di lokasi jemput, mengubah state menjadi TripStarted
-        order.jalan(); 
+            System.out.println("\n=== 3. SIKLUS PERJALANAN & PROSES CEGAH BUG CANCEL ===");
+            
+            Thread.sleep(2000); // Simulasi driver butuh waktu 2 detik meluncur ke lokasi jemput
+            
+            // Driver sampai di lokasi jemput, mengubah state menjadi TripStarted
+            order.jalan(); 
 
-        // Eksperimen Bug: Penumpang nakal mencoba cancel di tengah jalan (TripStarted)
-        order.cancelOrder(); 
+            // Eksperimen Bug: Penumpang nakal mencoba cancel di tengah jalan
+            order.cancelOrder(); 
+            
+            Thread.sleep(2500); // Simulasi perjalanan ke tujuan memakan waktu 2.5 detik
 
-        // Perjalanan selesai sampai tujuan
-        System.out.println();
-        order.jalan(); 
+            // Perjalanan selesai sampai tujuan
+            System.out.println();
+            order.jalan(); 
+
+        } catch (InterruptedException e) {
+            System.out.println("Simulasi terganggu: " + e.getMessage());
+        }
     }
 }
